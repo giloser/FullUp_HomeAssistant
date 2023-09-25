@@ -1,0 +1,11 @@
+{
+  "codeowners": ["giloser"],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/giloser/FullUp_HomeAssistant/",
+  "domain": "fullup_custom",
+  "iot_class": "cloud_polling",
+  "name": "FullUp Custom",
+  "requirements": [],
+  "version": "1.0.0"
+}
