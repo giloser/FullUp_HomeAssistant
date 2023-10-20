@@ -3,7 +3,7 @@ from typing import Any, Dict, Optional
 
 from homeassistant import config_entries, core
 from homeassistant.const import CONF_ACCESS_TOKEN, CONF_USERNAME, CONF_PASSWORD
-from homeassistant.helpers.aiohttp_client import async_get_clientsession
+from homeassistant.helpers.aiohttp_client import async_create_clientsession
 import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
 
@@ -33,7 +33,7 @@ async def validate_auth(data: Optional[Dict[str, Any]] , hass: core.HomeAssistan
 
     Raises a ValueError if the auth token is invalid.
     """
-    session = async_get_clientsession(hass)
+    session = async_create_clientsession(hass)
     vAuth = FullUp(session,data)
 
     #gh = GitHubAPI(session, "requester", oauth_token=access_token)

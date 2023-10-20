@@ -29,7 +29,7 @@ from homeassistant.const import (
     ELECTRIC_POTENTIAL_VOLT,
     ENERGY_WATT_HOUR, POWER_WATT, Platform, PERCENTAGE,VOLUME_LITERS
 )
-from homeassistant.helpers.aiohttp_client import async_get_clientsession
+from homeassistant.helpers.aiohttp_client import async_create_clientsession
 import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.entity import Entity
 from homeassistant.helpers.typing import (
@@ -73,7 +73,7 @@ async def async_setup_entry(
     config = coordinator.data
     _LOGGER.warning(f"async_setup_entry  || config={config}")
     _LOGGER.warning(f"async_setup_entry  || config_entry.entry_id={config_entry.entry_id}")
-    session = async_get_clientsession(hass)
+    session = async_create_clientsession(hass)
     string = '{"username":"","password":"","token":""}'
     #data["username"]=config[CONF_USERNAME]
     #data["password"]=config[CONF_PASSWORD]
@@ -119,7 +119,7 @@ async def async_setup_platform(
     discovery_info: Optional[DiscoveryInfoType] = None,
 ) -> None:
     """Set up the sensor platform."""
-    session = async_get_clientsession(hass)
+    session = async_create_clientsession(hass)
     string = '{"username":"","password":"","token":""}'
     data = json.loads(string)
 
@@ -153,7 +153,7 @@ async def async_setup_platform(
         tank["name"] = f"{name}_content"
         tank["id_sensor"] = f"{id}_content"
         sensors.append(FullUpTankContentEntity(vAuth, tank,coordinator))
-
+        tank["name"] = name 
     async_add_entities(sensors, update_before_add=True)
 
 
