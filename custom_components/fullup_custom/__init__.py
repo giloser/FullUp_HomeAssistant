@@ -2,7 +2,7 @@ import logging
 from datetime import timedelta
 from homeassistant import config_entries, core
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
-from homeassistant.helpers.aiohttp_client import async_get_clientsession
+from homeassistant.helpers.aiohttp_client import async_create_clientsession
 from homeassistant.const import (
     CONF_NAME,CONF_USERNAME,
     PERCENTAGE,
@@ -44,7 +44,7 @@ async def async_setup_entry(
                 data["password"]=config[CONF_PASSWORD]
                 if CONF_ACCESS_TOKEN in config:
                     data["token"]=config[CONF_ACCESS_TOKEN]
-                session = async_get_clientsession(hass)
+                session = async_create_clientsession(hass)
                 vAuth = FullUp(session,data)
 
                 tank_res = await vAuth.getitem(tank_url)

@@ -26,8 +26,8 @@ from homeassistant.const import (
     CONF_PASSWORD,
     PERCENTAGE,
     VOLUME,
-    ELECTRIC_POTENTIAL_VOLT,
-    ENERGY_WATT_HOUR, POWER_WATT, Platform, PERCENTAGE,VOLUME_LITERS
+    UnitOfElectricPotential,
+    UnitOfEnergy, Platform, PERCENTAGE,UnitOfVolume
 )
 from homeassistant.helpers.aiohttp_client import async_create_clientsession
 import homeassistant.helpers.config_validation as cv
@@ -94,6 +94,7 @@ async def async_setup_entry(
     
     for tank in config[CONF_TANK]:
         name = tank["name"]
+        name, sep, tail = name.partition('_')
         _LOGGER.warning(f"async_setup_entry => tank={tank}")
         id=tank["id"]
         tank["id_sensor"] = f"{id}"
@@ -171,7 +172,7 @@ class FullUpTankSensor(CoordinatorEntity, SensorEntity):
         self._name = tank.get("name", self.tank)
         self._state = None
         self._available = True
-        units = {VOLUME: "volume", PERCENTAGE: "percent",ELECTRIC_POTENTIAL_VOLT: "voltage"}
+        units = {VOLUME: "volume", PERCENTAGE: "percent",UnitOfElectricPotential.VOLT: "voltage"}
         self.data = {}
 
     @property
@@ -290,11 +291,11 @@ class FullUpTankSensor(CoordinatorEntity, SensorEntity):
                 else:
                     self._state = "Off"
 
-                self._data = {VOLUME: volume, PERCENTAGE: percent,ELECTRIC_POTENTIAL_VOLT: voltage}
+                self._data = {VOLUME: volume, PERCENTAGE: percent,UnitOfElectricPotential.VOLT: voltage}
             except Exception as error:
                 _LOGGER.exception(f"Error retrieving data from FullUp. => {error}")
                 self._state = "Off"
-                self._data = {VOLUME: 0, PERCENTAGE: 0,ELECTRIC_POTENTIAL_VOLT: 0}
+                self._data = {VOLUME: 0, PERCENTAGE: 0,UnitOfElectricPotential.VOLT: 0}
             
             
             self._available = True

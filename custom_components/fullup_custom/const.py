@@ -3,7 +3,7 @@ from homeassistant.components.sensor import (
     SensorEntityDescription,
     SensorStateClass,
 )
-from homeassistant.const import ENERGY_WATT_HOUR, POWER_WATT, Platform, PERCENTAGE,VOLUME_LITERS
+from homeassistant.const import UnitOfEnergy, POWER_WATT, Platform, PERCENTAGE,VOLUME_LITERS
 
 PLATFORMS = [Platform.SENSOR]
 
